@@ -1,0 +1,68 @@
+﻿@page
+
+@model IndexModel
+@{
+    ViewData["Title"] = "Игры";
+}
+
+<div class="text-center">
+
+
+    @if (Model.ShowForm)
+    {
+        <form asp-page-handler="EditSaveGame" method="post">
+            <h3>Редактирование игры</h3>
+            <label asp-for="gameForm.gameName"></label>
+            <input asp-for="gameForm.gameName" class="form-control" value="@Model.gameForm.gameName" />
+
+            <label asp-for="gameForm.genreId"></label>
+            <input asp-for="gameForm.genreId" class="form-control" value="@Model.gameForm.genreId" />
+
+            <button class="btn btn-default" style="border-color: red;">Сохранить</button>
+            <input type="hidden" name="id" value="@Model.gameForm.id" />
+        </form>
+        <form asp-page-handler=" EditCancelGame" method="post">
+            <button class="btn btn-default" style="border-color: red; bottom-padding: 30px;">Отмена</button>
+        </form>
+    }
+    @if (Model.ShowCreatingForm)
+    {
+        <form asp-page-handler="CreateSaveGame" method="post">
+            <h3>Редактирование игры</h3>
+            <label asp-for="gameForm.gameName"></label>
+            <input asp-for="gameForm.gameName" class="form-control" value="@Model.gameForm.gameName" />
+
+            <label asp-for="gameForm.genreId"></label>
+            <input asp-for="gameForm.genreId" class="form-control" value="@Model.gameForm.genreId" />
+
+            <button class="btn btn-default" style="border-color: red;">Создать</button>
+            <input type="hidden" name="id" value="@Model.gameForm.id" />
+        </form>
+        <form asp-page-handler=" CreateCancelGame" method="post">
+            <button class="btn btn-default" style="border-color: red; bottom-padding: 30px;">Отмена</button>
+        </form>
+    }
+
+    <h3>Игры</h3>
+
+    @foreach (var game in Model.games.TakeLast(3))
+    {
+        <div style=" border-color: blue; padding: 30px;">
+            <p>id: @game.id</p>
+            <p>game_name: @game.game_name</p>
+            <p>genre_id: @game.genre_id</p>
+            <form asp-page-handler="EditGame" method="post">
+                <button class="btn btn-default" style="border-color: red;">Изменить</button>
+                <input type="hidden" name="id" value="@game.id" />
+            </form>
+            <form asp-page-handler="DeleteGame" method="post">
+                <button class="btn btn-default" style="border-color: red;">Удалить</button>
+                <input type="hidden" name="id" value="@game.id" />
+            </form>
+        </div>
+    }
+    <form asp-page-handler="AddGame" method="post">
+        <button class="btn" style="border-color: red;">Создать видеоигру</button>
+    </form>
+
+</div>

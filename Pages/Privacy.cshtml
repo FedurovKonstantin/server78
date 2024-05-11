@@ -1,0 +1,61 @@
+﻿@page
+
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Паблишеры";
+}
+
+<div class="text-center">
+
+
+    @if (Model.ShowForm)
+    {
+        <form asp-page-handler="EditSavePublisher" method="post">
+            <h3>Редактирование паблишера</h3>
+            <label asp-for="publisherForm.name"></label>
+            <input asp-for="publisherForm.name" class="form-control" value="@Model.publisherForm.name" />
+
+            <button class="btn btn-default" style="border-color: red;">Сохранить</button>
+            <input type="hidden" name="id" value="@Model.publisherForm.id" />
+        </form>
+        <form asp-page-handler=" EditCancelPublisher" method="post">
+            <button class="btn btn-default" style="border-color: red; bottom-padding: 30px;">Отмена</button>
+        </form>
+    }
+    @if (Model.ShowCreatingForm)
+    {
+        <form asp-page-handler="CreateSavePublisher" method="post">
+            <h3>Редактирование игры</h3>
+            <label asp-for="publisherForm.name"></label>
+            <input asp-for="publisherForm.name" class="form-control" value="@Model.publisherForm.name" />
+
+            <button class="btn btn-default" style="border-color: red;">Создать</button>
+            <input type="hidden" name="id" value="@Model.publisherForm.id" />
+        </form>
+        <form asp-page-handler=" CreateCancelPublisher" method="post">
+            <button class="btn btn-default" style="border-color: red; bottom-padding: 30px;">Отмена</button>
+        </form>
+    }
+
+    <h3>Паблишеры</h3>
+
+    @foreach (var publisher in Model.publishers.TakeLast(3))
+    {
+        <div style=" border-color: blue; padding: 30px;">
+            <p>id: @publisher.id</p>
+            <p>publisher_name: @publisher.publisher_name</p>
+            <form asp-page-handler="EditPublisher" method="post">
+                <button class="btn btn-default" style="border-color: red;">Изменить</button>
+                <input type="hidden" name="id" value="@publisher.id" />
+            </form>
+            <form asp-page-handler="DeletePublisher" method="post">
+                <button class="btn btn-default" style="border-color: red;">Удалить</button>
+                <input type="hidden" name="id" value="@publisher.id" />
+            </form>
+        </div>
+    }
+    <form asp-page-handler="AddPublisher" method="post">
+        <button class="btn" style="border-color: red;">Создать паблишера</button>
+    </form>
+
+</div>
